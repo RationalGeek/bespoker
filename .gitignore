@@ -1,0 +1,23 @@
+###############
+# Directories #
+###############
+bin/
+obj/
+TestResults/
+packages/
+App_Data/
+
+###################
+# VS User Files   #
+###################
+*.suo
+*.csproj.user
+*.pubxml.user
+
+###################
+# compiled source #
+###################
+*.dll
+*.exe
+*.pdb
+*.dll.config
