@@ -1,32 +1,37 @@
 ﻿using Bespoker.Web.Models;
 using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Bespoker.Web
 {
-    public class BespokerHub : Hub
+    public class SessionManager
     {
-        public BespokerHub()
+        private static Lazy<SessionManager> _instance = new Lazy<SessionManager>(() => new SessionManager(GlobalHost.ConnectionManager.GetHubContext<BespokerHub>()));
+        public static SessionManager Instance { get { return _instance.Value; } }
+
+        private IHubConnectionContext _clients;
+        private IGroupManager _groups;
+        private IDictionary<string, PokerSession> _sessions = new ConcurrentDictionary<string, PokerSession>();
+
+        private SessionManager(IHubContext hubContext)
         {
-            _Sessions = new Dictionary<string, PokerSession>();
+            _clients = hubContext.Clients;
+            _groups = hubContext.Groups;
         }
 
-        private IDictionary<string, PokerSession> _Sessions { get; set; }
-
-        /// <summary>
-        /// Called when a new player joins in.
-        /// </summary>
-        public void RegisterForSession(string sessionName)
+        public void RegisterForSession(string sessionName, string connId)
         {
             // Find the session if it exists, or create a new one
-            if (!_Sessions.ContainsKey(sessionName))
-                _Sessions.Add(sessionName, BuildNewSession(sessionName));
-            var session = _Sessions[sessionName];
+            if (!_sessions.ContainsKey(sessionName))
+                _sessions.Add(sessionName, BuildNewSession(sessionName));
+            var session = _sessions[sessionName];
 
             // Find the player if already attached to session, otherwise create
-            var connId = Context.ConnectionId;
+            //var connId = Context.ConnectionId;
             var player = session.Players.SingleOrDefault(p => p.ConnectionId == connId);
             if (player == null)
             {
@@ -42,20 +47,31 @@ namespace Bespoker.Web
                 session.Players.Add(player);
 
                 // Add player to SignalR group
-                Groups.Add(connId, session.Name);
+                _groups.Add(connId, session.Name);
             }
 
             // Session and player are initialized - init client
-            Clients.Caller.InitSession(session);
+            _clients.Client(connId).InitSession(session);
 
             // Tell the other clients in this group that a player joined
-            Clients.Group(session.Name, connId).PlayerJoined(player);
+            _clients.Group(session.Name, connId).PlayerJoined(player);
         }
 
         private PokerSession BuildNewSession(string sessionName)
         {
             var session = new PokerSession { Id = Guid.NewGuid().ToString(), Name = sessionName, Players = new List<Player>() };
             return session;
+        }
+    }
+
+    public class BespokerHub : Hub
+    {
+        /// <summary>
+        /// Called when a new player joins in.
+        /// </summary>
+        public void RegisterForSession(string sessionName)
+        {
+            SessionManager.Instance.RegisterForSession(sessionName, Context.ConnectionId);
         }
     }
 }
