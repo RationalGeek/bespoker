@@ -43,12 +43,7 @@ input[type="checkbox"].input-validation-error {
 
 
 
-
-
-
-#cardChooser .card {
-    position: relative; 
-    display: inline-block;
+.card {
     background-color: white;
     border: solid 2px #666;
     width: 75px;
@@ -57,9 +52,15 @@ input[type="checkbox"].input-validation-error {
     font-weight: bold;
     font-size: 150%;
     padding-top: 30px;
+    border-radius: 5px;
+}
+
+
+#cardChooser .card {
+    position: relative; 
+    display: inline-block;
     margin-right: -38px;
     margin-bottom: 15px;
-    border-radius: 5px;
     z-index: 0;
     cursor: pointer;
 }
@@ -76,3 +77,32 @@ input[type="checkbox"].input-validation-error {
     background-color: yellow;
 }
 
+
+#selectedCards .selectedCardContainer {
+    display: inline-block;
+    width: 75px;
+    text-align: center;
+    margin-right: 15px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#selectedCards .noCardChosen {
+    background-color: #eee;
+}
+
+#selectedCards .cardChosen {
+    background-color: #b4fbac;
+}
+
+#selectedCards .selectedCard {
+    display: none;
+}
+
+#selectedCards .selectedCardContainer.reveal .selectedCard {
+    display: inherit;
+}
+
+#selectedCards .selectedCardContainer.reveal .cardChosen, #selectedCards .selectedCardContainer.reveal .noCardChosen {
+    display: none;
+}
