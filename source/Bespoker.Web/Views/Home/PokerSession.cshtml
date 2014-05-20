@@ -12,6 +12,27 @@
     <div data-bind="text: Name"></div>
 </div>
 
+<h3>Choose Your Card</h3>
+<div id="cardChooser">
+    <span class="card">0</span>
+    <span class="card">&frac12;</span>
+    <span class="card">1</span>
+    <span class="card">2</span>
+    <span class="card">3</span>
+    <span class="card">5</span>
+    <span class="card">8</span>
+    <span class="card">13</span>
+    <span class="card">20</span>
+    <span class="card">40</span>
+    <span class="card">100</span>
+    <span class="card">?</span>
+    <span class="card">&infin;</span>
+</div>
+
+<h3>Selected Cards</h3>
+<div id="selectedCards">
+</div>
+
 @section scripts {
     <script src="~/Scripts/jquery.signalR-2.0.3.min.js"></script>
     <script src="~/Scripts/knockout-3.1.0.debug.js"></script>
@@ -37,6 +58,12 @@
             // Initialize connection to SignalR
             $.connection.hub.start().done(function () {
                 hub.server.registerForSession(sessionName);
+            });
+
+            var cards = $('#cardChooser .card');
+            cards.click(function () {
+                $(cards).removeClass('selected');
+                $(this).addClass('selected');
             });
         });
     </script>

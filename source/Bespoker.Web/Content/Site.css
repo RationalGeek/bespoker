@@ -40,3 +40,39 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+
+
+
+
+
+#cardChooser .card {
+    position: relative; 
+    display: inline-block;
+    background-color: white;
+    border: solid 2px #666;
+    width: 75px;
+    height: 100px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 150%;
+    padding-top: 30px;
+    margin-right: -38px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    z-index: 0;
+    cursor: pointer;
+}
+
+#cardChooser .card.selected {
+    background-color: #00ff90;
+    top: -10px;
+    z-index: 1000;
+}
+
+#cardChooser .card:hover {
+    z-index: 2000;
+    top: -10px;
+    background-color: yellow;
+}
+
