@@ -6,11 +6,11 @@
 
 <h2>Poker Session <span data-bind="text: Name"></span></h2>
 
-<p><strong>Players:</strong></p>
+@*<p><strong>Players:</strong></p>
 <div data-bind="foreach: Players">
     <div data-bind="text: Id"></div>
     <div data-bind="text: Name"></div>
-</div>
+</div>*@
 
 <h3>Choose Your Card</h3>
 <div id="cardChooser">
@@ -30,7 +30,11 @@
 </div>
 
 <h3>Selected Cards</h3>
-<div id="selectedCards">
+<div id="selectedCards" data-bind="foreach: Players">
+    <div class="selectedCardContainer">
+        <div class="playerName" data-bind="text: Name, attr: { 'data-id': Id }"></div>
+        <div class="card" data-bind="text: SelectedCard"></div>
+    </div>
 </div>
 
 @section scripts {
@@ -56,7 +60,16 @@
             };
 
             hub.client.cardSelected = function (playerId, cardValue) {
-                //viewModel.Players.push(ko.mapping.fromJS(player));
+                // Find player by Id
+                var players = viewModel.Players();
+                for (var i = 0; i < players.length; i++) {
+                    var player = players[i];
+                    if (player.Id() == playerId) {
+                        // Update selected card value
+                        player.SelectedCard(cardValue);
+                        break;
+                    }
+                }
             };
 
             // Initialize connection to SignalR

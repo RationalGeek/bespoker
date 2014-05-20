@@ -90,7 +90,7 @@ namespace Bespoker.Web
         }
 
         /// <summary>
-        /// Called when a new player joins in.
+        /// Called when a player selects a card
         /// </summary>
         public void SelectCard(string cardValue)
         {
