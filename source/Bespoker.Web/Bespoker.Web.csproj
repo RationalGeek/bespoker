@@ -189,7 +189,9 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\PokerSessionModel.cs" />
+    <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\PokerSession.cs" />
+    <Compile Include="Models\PokerSessionViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

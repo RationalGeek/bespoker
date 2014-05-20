@@ -15,7 +15,7 @@ namespace Bespoker.Web.Controllers
             if (string.IsNullOrWhiteSpace(id))
                 return new HttpNotFoundResult();
 
-            var model = new PokerSessionModel { Name = id };
+            var model = new PokerSessionViewModel { Name = id };
             return View(model);
         }
 

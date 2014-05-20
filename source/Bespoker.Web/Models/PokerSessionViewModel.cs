@@ -1,7 +1,7 @@
 ﻿
 namespace Bespoker.Web.Models
 {
-    public class PokerSessionModel
+    public class PokerSessionViewModel
     {
         public string Name { get; set; }
     }
