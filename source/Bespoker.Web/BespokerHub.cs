@@ -57,6 +57,20 @@ namespace Bespoker.Web
             _clients.Group(session.Name, connId).PlayerJoined(player);
         }
 
+        public void SelectCard(string sessionName, string connectionId, string cardValue)
+        {
+            if (_sessions.ContainsKey(sessionName))
+            {
+                var session = _sessions[sessionName];
+                var player = session.Players.SingleOrDefault(p => p.ConnectionId == connectionId);
+                if (player != null)
+                {
+                    player.SelectedCard = cardValue;
+                    _clients.Group(session.Name).CardSelected(player.Id, cardValue);
+                }
+            }
+        }
+
         private PokerSession BuildNewSession(string sessionName)
         {
             var session = new PokerSession { Id = Guid.NewGuid().ToString(), Name = sessionName, Players = new List<Player>() };
@@ -71,7 +85,16 @@ namespace Bespoker.Web
         /// </summary>
         public void RegisterForSession(string sessionName)
         {
+            Clients.Caller.SessionName = sessionName;
             SessionManager.Instance.RegisterForSession(sessionName, Context.ConnectionId);
+        }
+
+        /// <summary>
+        /// Called when a new player joins in.
+        /// </summary>
+        public void SelectCard(string cardValue)
+        {
+            SessionManager.Instance.SelectCard(Clients.Caller.SessionName, Context.ConnectionId, cardValue);
         }
     }
 }

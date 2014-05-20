@@ -55,6 +55,10 @@
                 viewModel.Players.push(ko.mapping.fromJS(player));
             };
 
+            hub.client.cardSelected = function (playerId, cardValue) {
+                //viewModel.Players.push(ko.mapping.fromJS(player));
+            };
+
             // Initialize connection to SignalR
             $.connection.hub.start().done(function () {
                 hub.server.registerForSession(sessionName);
@@ -64,6 +68,7 @@
             cards.click(function () {
                 $(cards).removeClass('selected');
                 $(this).addClass('selected');
+                hub.server.selectCard($(this).text());
             });
         });
     </script>
