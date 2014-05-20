@@ -12,7 +12,7 @@ namespace Bespoker.Web
             routes.MapRoute(
                 name: "SessionRoute",
                 url: "s/{id}",
-                defaults: new { controller = "Home", action = "Session", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "PokerSession", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(

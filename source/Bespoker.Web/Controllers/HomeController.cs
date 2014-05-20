@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using Bespoker.Web.Models;
+using System.Web.Mvc;
 
 namespace Bespoker.Web.Controllers
 {
@@ -9,9 +10,13 @@ namespace Bespoker.Web.Controllers
             return View();
         }
 
-        public ActionResult Session(string id)
+        public ActionResult PokerSession(string id)
         {
-            return View();
+            if (string.IsNullOrWhiteSpace(id))
+                return new HttpNotFoundResult();
+
+            var model = new PokerSessionModel { Name = id };
+            return View(model);
         }
 
         public ActionResult About()
