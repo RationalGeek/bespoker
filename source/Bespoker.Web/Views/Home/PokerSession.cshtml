@@ -31,11 +31,11 @@
 
 <h3>Selected Cards</h3>
 <div id="selectedCards" data-bind="foreach: Players">
-    <div class="selectedCardContainer" data-bind="css: { reveal: $root.CardsRevealed() }">
+    <div class="selectedCardContainer">
         <div class="playerName" data-bind="text: Name, attr: { 'data-id': Id }"></div>
-        <div class="card selectedCard" data-bind="text: SelectedCard() || 'X'"></div>
-        <div class="card noCardChosen" data-bind="visible: !SelectedCard()"><span class="glyphicon glyphicon-time"></span></div>
-        <div class="card cardChosen" data-bind="visible: SelectedCard()"><span class="glyphicon glyphicon-ok"></span></div>
+        <div class="card selectedCard hidden" data-bind="text: SelectedCard() || 'X', css: { hidden: !$root.CardsRevealed() }"></div>
+        <div class="card noCardChosen hidden" data-bind="css: { hidden: SelectedCard() || $root.CardsRevealed() }"><span class="glyphicon glyphicon-time"></span></div>
+        <div class="card cardChosen hidden" data-bind="css: { hidden: !SelectedCard() || $root.CardsRevealed() }"><span class="glyphicon glyphicon-ok"></span></div>
     </div>
 </div>
 

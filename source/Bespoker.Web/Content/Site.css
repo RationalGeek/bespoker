@@ -95,18 +95,6 @@ input[type="checkbox"].input-validation-error {
     background-color: #b4fbac;
 }
 
-#selectedCards .selectedCard {
-    display: none;
-}
-
-#selectedCards .selectedCardContainer.reveal .selectedCard {
-    display: inherit;
-}
-
-#selectedCards .selectedCardContainer.reveal .cardChosen, #selectedCards .selectedCardContainer.reveal .noCardChosen {
-    display: none;
-}
-
 #actionButtons .btn {
     width: 125px;
 }
