@@ -89,9 +89,17 @@
 
             var cards = $('#cardChooser .card');
             cards.click(function () {
-                $(cards).removeClass('selected');
-                $(this).addClass('selected');
-                hub.server.selectCard($(this).text());
+                // Is this card already selected?
+                var card = $(this);
+                if (card.hasClass('selected')) {
+                    card.removeClass('selected');
+                    hub.server.selectCard(null);
+                }
+                else {
+                    $(cards).removeClass('selected');
+                    card.addClass('selected');
+                    hub.server.selectCard(card.text());
+                }
             });
 
             $('#showCards').click(function () {
