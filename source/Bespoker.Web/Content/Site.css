@@ -9,13 +9,13 @@
 }
 
 .card {
-    background-color: white;
+    background-color: #B4D8E7;
     border: solid 2px #666;
     width: 75px;
     height: 100px;
     text-align: center;
     font-weight: bold;
-    font-size: 150%;
+    font-size: 200%;
     padding-top: 30px;
     border-radius: 5px;
 }
@@ -30,16 +30,18 @@
     cursor: pointer;
 }
 
-#cardChooser .card.selected {
-    background-color: #00ff90;
-    top: -10px;
-    z-index: 1000;
-}
+
 
 #cardChooser .card:hover {
     z-index: 2000;
+    top: -5px;
+    background-color: #FFEC94;
+}
+
+#cardChooser .card.selected {
+    background-color: #B0E57C;
     top: -10px;
-    background-color: yellow;
+    z-index: 1000;
 }
 
 #selectedCards .selectedCardContainer {
@@ -52,15 +54,19 @@
 }
 
 #selectedCards .selectedCardContainer.currentPlayer {
-    background-color: pink;
+    border: solid 2px #56BAEC;
+}
+
+#selectedCards .selectedCard.noneSelected {
+    background-color: #FFAEAE;
 }
 
 #selectedCards .noCardChosen {
-    background-color: #eee;
+    background-color: #ddd;
 }
 
 #selectedCards .cardChosen {
-    background-color: #b4fbac;
+    background-color: #B0E57C;
 }
 
 #actionButtons .btn {

@@ -4,8 +4,8 @@
     ViewBag.Title = Model.Name;
 }
 
-<h2>Poker Session <span data-bind="text: Name"></span></h2>
-
+<h2>Planning Poker &ndash; <span data-bind="text: Name"></span></h2>
+<p>To invite others, share copy the URL in your browser bar and share it with them.</p>
 <div id="actionButtons">
     <a id="showCards" class="btn btn-primary" data-bind="visible: !CardsRevealed()">Show Cards</a>
     <a id="hideCards" class="btn btn-primary" data-bind="visible: CardsRevealed()">Hide Cards</a>
@@ -36,7 +36,7 @@
         <div class="playerName">
             <span data-bind="text: Name"></span>
         </div>
-        <div class="card selectedCard hidden" data-bind="text: SelectedCard() || 'X', css: { hidden: !$root.CardsRevealed() }"></div>
+        <div class="card selectedCard hidden" data-bind="text: SelectedCard() || 'N/A', css: { hidden: !$root.CardsRevealed(), noneSelected: !SelectedCard() }"></div>
         <div class="card noCardChosen hidden" data-bind="css: { hidden: SelectedCard() || $root.CardsRevealed() }"><span class="glyphicon glyphicon-time"></span></div>
         <div class="card cardChosen hidden" data-bind="css: { hidden: !SelectedCard() || $root.CardsRevealed() }"><span class="glyphicon glyphicon-ok"></span></div>
     </div>
