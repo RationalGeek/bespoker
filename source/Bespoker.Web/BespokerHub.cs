@@ -66,9 +66,19 @@ namespace Bespoker.Web
                 if (player != null)
                 {
                     player.SelectedCard = cardValue;
-                    _clients.Group(session.Name).CardSelected(player.Id, cardValue);
+                    _clients.Group(sessionName).CardSelected(player.Id, cardValue);
                 }
             }
+        }
+
+        public void ShowCards(string sessionName)
+        {
+            _clients.Group(sessionName).ShowCards();
+        }
+
+        public void HideCards(string sessionName)
+        {
+            _clients.Group(sessionName).HideCards();
         }
 
         private PokerSession BuildNewSession(string sessionName)
@@ -95,6 +105,23 @@ namespace Bespoker.Web
         public void SelectCard(string cardValue)
         {
             SessionManager.Instance.SelectCard(Clients.Caller.SessionName, Context.ConnectionId, cardValue);
+        }
+
+        public void ShowCards()
+        {
+            SessionManager.Instance.ShowCards(Clients.Caller.SessionName);
+        }
+
+        public void HideCards()
+        {
+            SessionManager.Instance.HideCards(Clients.Caller.SessionName);
+        }
+
+        public override System.Threading.Tasks.Task OnDisconnected()
+        {
+            // TODO: Handle client disconnection
+
+            return base.OnDisconnected();
         }
     }
 }

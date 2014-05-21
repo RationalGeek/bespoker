@@ -106,3 +106,7 @@ input[type="checkbox"].input-validation-error {
 #selectedCards .selectedCardContainer.reveal .cardChosen, #selectedCards .selectedCardContainer.reveal .noCardChosen {
     display: none;
 }
+
+#actionButtons .btn {
+    width: 125px;
+}

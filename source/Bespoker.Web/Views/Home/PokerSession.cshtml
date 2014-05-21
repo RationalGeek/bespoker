@@ -6,11 +6,11 @@
 
 <h2>Poker Session <span data-bind="text: Name"></span></h2>
 
-@*<p><strong>Players:</strong></p>
-<div data-bind="foreach: Players">
-    <div data-bind="text: Id"></div>
-    <div data-bind="text: Name"></div>
-</div>*@
+<div id="actionButtons">
+    <a id="showCards" class="btn btn-primary" data-bind="visible: !CardsRevealed()">Show Cards</a>
+    <a id="hideCards" class="btn btn-primary" data-bind="visible: CardsRevealed()">Hide Cards</a>
+    <a id="reset" class="btn btn-danger">Reset</a>
+</div>
 
 <h3>Choose Your Card</h3>
 <div id="cardChooser">
@@ -31,7 +31,7 @@
 
 <h3>Selected Cards</h3>
 <div id="selectedCards" data-bind="foreach: Players">
-    <div class="selectedCardContainer reveal">
+    <div class="selectedCardContainer" data-bind="css: { reveal: $root.CardsRevealed() }">
         <div class="playerName" data-bind="text: Name, attr: { 'data-id': Id }"></div>
         <div class="card selectedCard" data-bind="text: SelectedCard() || 'X'"></div>
         <div class="card noCardChosen" data-bind="visible: !SelectedCard()"><span class="glyphicon glyphicon-time"></span></div>
@@ -74,6 +74,14 @@
                 }
             };
 
+            hub.client.showCards = function () {
+                viewModel.CardsRevealed(true);
+            }
+
+            hub.client.hideCards = function () {
+                viewModel.CardsRevealed(false);
+            }
+
             // Initialize connection to SignalR
             $.connection.hub.start().done(function () {
                 hub.server.registerForSession(sessionName);
@@ -84,6 +92,18 @@
                 $(cards).removeClass('selected');
                 $(this).addClass('selected');
                 hub.server.selectCard($(this).text());
+            });
+
+            $('#showCards').click(function () {
+                hub.server.showCards();
+            });
+
+            $('#hideCards').click(function () {
+                hub.server.hideCards();
+            });
+
+            $('#reset').click(function () {
+                // TODO: Implement reset
             });
         });
     </script>
