@@ -9,6 +9,7 @@
 <div id="actionButtons">
     <a id="showCards" class="btn btn-primary" data-bind="visible: !CardsRevealed()">Show Cards</a>
     <a id="hideCards" class="btn btn-primary" data-bind="visible: CardsRevealed()">Hide Cards</a>
+    <a id="changeName" class="btn btn-info">Change Name</a>
     <a id="reset" class="btn btn-danger">Reset</a>
 </div>
 
@@ -31,8 +32,10 @@
 
 <h3>Selected Cards</h3>
 <div id="selectedCards" data-bind="foreach: Players">
-    <div class="selectedCardContainer">
-        <div class="playerName" data-bind="text: Name, attr: { 'data-id': Id }"></div>
+    <div class="selectedCardContainer" data-bind="css: { currentPlayer: $root.CurrentConnectionId() == ConnectionId() }">
+        <div class="playerName">
+            <span data-bind="text: Name"></span>
+        </div>
         <div class="card selectedCard hidden" data-bind="text: SelectedCard() || 'X', css: { hidden: !$root.CardsRevealed() }"></div>
         <div class="card noCardChosen hidden" data-bind="css: { hidden: SelectedCard() || $root.CardsRevealed() }"><span class="glyphicon glyphicon-time"></span></div>
         <div class="card cardChosen hidden" data-bind="css: { hidden: !SelectedCard() || $root.CardsRevealed() }"><span class="glyphicon glyphicon-ok"></span></div>
@@ -54,6 +57,7 @@
             hub.client.initSession = function (session) {
                 // Init viewmodel based on session
                 viewModel = ko.mapping.fromJS(session);
+                viewModel.CurrentConnectionId = ko.observable(hub.connection.id);
                 ko.applyBindings(viewModel);
             };
 
@@ -76,11 +80,11 @@
 
             hub.client.showCards = function () {
                 viewModel.CardsRevealed(true);
-            }
+            };
 
             hub.client.hideCards = function () {
                 viewModel.CardsRevealed(false);
-            }
+            };
 
             hub.client.reset = function (session) {
                 // Update viewmodel based on new session data
@@ -88,7 +92,7 @@
 
                 // UI should show no cards selected
                 $('#cardChooser .card').removeClass('selected');
-            }
+            };
 
             // Initialize connection to SignalR
             $.connection.hub.start().done(function () {
@@ -121,6 +125,36 @@
             $('#reset').click(function () {
                 hub.server.reset();
             });
+
+            $('#changeName').click(function () {
+                var newName = prompt('Change name to what?');
+                hub.server.changeName(newName);
+            });
+
+            hub.client.newPlayerName = function (playerId, newName) {
+                // Loop through all the players, find the one in question, and update name
+                var players = viewModel.Players();
+                for (var i = 0; i < players.length; i++) {
+                    var player = players[i];
+                    if (player.Id() == playerId) {
+                        // Update selected card value
+                        player.Name(newName);
+                        break;
+                    }
+                }
+            };
+
+            hub.client.removePlayer = function (playerId) {
+                // Loop through all the players, find the one in question, and update name
+                var players = viewModel.Players();
+                for (var i = 0; i < players.length; i++) {
+                    var player = players[i];
+                    if (player.Id() == playerId) {
+                        viewModel.Players.remove(player);
+                        break;
+                    }
+                }
+            };
         });
     </script>
 }

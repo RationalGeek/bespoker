@@ -41,8 +41,6 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
-
-
 .card {
     background-color: white;
     border: solid 2px #666;
@@ -77,14 +75,17 @@ input[type="checkbox"].input-validation-error {
     background-color: yellow;
 }
 
-
 #selectedCards .selectedCardContainer {
     display: inline-block;
-    width: 75px;
     text-align: center;
     margin-right: 15px;
     font-weight: bold;
     margin-bottom: 20px;
+    padding: 5px;
+}
+
+#selectedCards .selectedCardContainer.currentPlayer {
+    background-color: pink;
 }
 
 #selectedCards .noCardChosen {
