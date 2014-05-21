@@ -81,6 +81,23 @@ namespace Bespoker.Web
             _clients.Group(sessionName).HideCards();
         }
 
+        public void Reset(string sessionName)
+        {
+            if (_sessions.ContainsKey(sessionName))
+            {
+                var session = _sessions[sessionName];
+
+                // Set all players selected card to null
+                session.Players.ForEach(p => p.SelectedCard = null);
+
+                // Cards hidden
+                session.CardsRevealed = false;
+
+                // Send reset message to all players
+                _clients.Group(sessionName).Reset(session);
+            }
+        }
+
         private PokerSession BuildNewSession(string sessionName)
         {
             var session = new PokerSession { Id = Guid.NewGuid().ToString(), Name = sessionName, Players = new List<Player>() };
@@ -115,6 +132,11 @@ namespace Bespoker.Web
         public void HideCards()
         {
             SessionManager.Instance.HideCards(Clients.Caller.SessionName);
+        }
+
+        public void Reset()
+        {
+            SessionManager.Instance.Reset(Clients.Caller.SessionName);
         }
 
         public override System.Threading.Tasks.Task OnDisconnected()
