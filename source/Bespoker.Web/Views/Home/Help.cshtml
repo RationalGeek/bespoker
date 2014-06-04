@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Help";
+}
+<h2>@ViewBag.Title</h2>
+
+<p><strong>How to play:</strong></p>
+<ol>
+    <li>Go to the @Html.ActionLink("homepage", "Index", "Home")</li>
+    <li>Enter a unique name in the text box and click the button to create your poker session.</li>
+    <li>Copy the URL and send it to everyone who would like to join.</li>
+    <li>Everyone should click on "Change Name" and put in their name to avoid confusion.</li>
+    <li>Discuss the item to be estimated (this app does not support any communication; use something else for that, such as a conference call).</li>
+    <li>Everyone selects a card for their estimate, which turns their card green on everyone's screen.</li>
+    <li>When all cards appear green you are ready to click “Show Cards”.</li>
+    <li>If the estimates don't all match, you can hide the cards again, or people can change their selected cards while they are shown.</li>
+    <li>Click "Reset" to start the next round.</li>
+</ol>
+
+<p><strong>Note on security:</strong></p>
+
+<p>There is no security on who can do what in a session.
+   Everyone in the poker session can reset cards, display them, etc.
+   You are best off electing one person in the session to take point on these controls.</p>
+
+<p><strong>Known issues:</strong></p>
+
+<ul>
+    <li>For some reason, IE 8 is not consistent about displaying the checkbox symbol on the card when someone makes a selection.  The card always turns green, though.  So if you are using IE 8, first of all stop doing that and get a real browser.  And second of all, ignore the check marks.</li>
+</ul>

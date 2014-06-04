@@ -23,5 +23,10 @@ namespace Bespoker.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Help()
+        {
+            return View();
+        }
     }
 }
